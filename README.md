@@ -25,8 +25,8 @@ An Expense Tracker application built using **Python** (Django), **Sqlite3**, and
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/shreyash0019/ExpenseTracker.git
-   cd ExpenseTracker
+   git clone https://github.com/shreyash0019/ExpenseTracker-Django.git
+   cd ExpenseTracker-Django
    ```
 
 2. Set up a virtual environment:
