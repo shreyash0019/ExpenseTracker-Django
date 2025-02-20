@@ -1,0 +1,13 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+<h1>Expense Visualization</h1>
+<div>
+    <h3>Pie Chart</h3>
+    <img src="{{ pie_chart_path }}" alt="Pie Chart" style="max-width: 100%; height: auto;">
+</div>
+<div>
+    <h3>Bar Chart</h3>
+    <img src="{{ bar_chart_path }}" alt="Bar Chart" style="max-width: 100%; height: auto;">
+</div>
+{% endblock %}

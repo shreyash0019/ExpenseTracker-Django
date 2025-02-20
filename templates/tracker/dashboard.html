@@ -1,0 +1,40 @@
+{% extends 'tracker/base.html' %}
+
+{% block content %}
+<h1 style="text-align: center; font-family: Arial, sans-serif; color: #333;">Your Dashboard</h1>
+
+<div style="max-width: 900px; margin: 0 auto; padding: 20px; background-color: #f4f4f4; border-radius: 8px;">
+    <h2 style="font-size: 24px; color: #333;">Expense Summary</h2>
+    
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+        <thead>
+            <tr style="background-color: #007bff; color: white;">
+                <th style="padding: 10px; text-align: left;">Category</th>
+                <th style="padding: 10px; text-align: left;">Amount</th>
+                <th style="padding: 10px; text-align: left;">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for expense in expenses %}
+                <tr style="border-bottom: 1px solid #ddd;">
+                    <td style="padding: 10px;">{{ expense.category.name }}</td>
+                    <td style="padding: 10px;">₹{{ expense.amount }}</td>
+                    <td style="padding: 10px;">{{ expense.date_added }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div style="text-align: center;">
+        <a href="{% url 'add_expense' %}" style="text-decoration: none; color: white; background-color: #007bff; padding: 10px 20px; font-size: 16px; border-radius: 5px; transition: background-color 0.3s;">
+            Add New Expense
+        </a>
+    </div>
+
+    <h2 style="font-size: 24px; color: #333; margin-top: 30px;">Visualization</h2>
+    <div style="text-align: center; margin-top: 20px;">
+        <img src="{{ pie_chart_path }}" alt="Pie Chart" style="max-width: 100%; height: auto; margin-bottom: 20px;">
+        <img src="{{ bar_chart_path }}" alt="Bar Chart" style="max-width: 100%; height: auto;">
+    </div>
+</div>
+{% endblock %}

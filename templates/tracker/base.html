@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body style="background-color: #f0f4f8; font-family: Arial, sans-serif; margin: 0; padding: 0;">
+    <header style="background-color: #007bff; padding: 1rem;">
+        <nav style="display: flex; justify-content: center; gap: 1rem;">
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard' %}" style="color: white; background-color: #0056b3; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px;">Dashboard</a>
+                <a href="{% url 'add_expense' %}" style="color: white; background-color: #0056b3; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px;">Add Expense</a>
+                <a href="{% url 'visualize_expenses' %}" style="color: white; background-color: #0056b3; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px;">Visualize Expenses</a>
+                <a href="{% url 'logout' %}" style="color: white; background-color: #ff0000; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px;">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" style="color: white; background-color: #28a745; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px;">Login</a>
+                <a href="{% url 'register' %}" style="color: white; background-color: #17a2b8; padding: 0.5rem 1rem; text-decoration: none; border-radius: 5px;">Register</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main style="padding: 2rem; text-align: center;">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% extends 'tracker/base.html' %}
+{% block content %}
+<h1 style="text-align: center; font-family: Arial, sans-serif; color: #333;">Add Expense</h1>
+<form method="POST" style="max-width: 500px; margin: 0 auto; padding: 20px; background-color: #f4f4f4; border-radius: 8px;">
+    {% csrf_token %}
+    <div style="margin-bottom: 15px;">
+        <label for="category" style="display: block; font-size: 16px; margin-bottom: 5px;">Category:</label>
+        <select name="category" style="width: 100%; padding: 10px; font-size: 16px; border-radius: 5px;">
+            {% for category in categories %}
+                <option value="{{ category.id }}" style="padding: 5px;">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="amount" style="display: block; font-size: 16px; margin-bottom: 5px;">Amount:</label>
+        <input type="number" name="amount" placeholder="Amount" required style="width: 100%; padding: 10px; font-size: 16px; border-radius: 5px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <label for="date_added" style="display: block; font-size: 16px; margin-bottom: 5px;">Date:</label>
+        <input type="date" name="date_added" required style="width: 100%; padding: 10px; font-size: 16px; border-radius: 5px;">
+    </div>
+    <div style="text-align: center;">
+        <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; cursor: pointer;">Add Expense</button>
+    </div>
+</form>
+{% endblock %}
