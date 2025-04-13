@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-)3%%$6h4e4p6te-5@snh++0ef-%*2jgef*9l#hmd=3j&ysi4@x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['testswagger.pythonanywhere.com', 'localhost', '127.0.0.1']
 
 
 
