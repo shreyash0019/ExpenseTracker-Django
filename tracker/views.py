@@ -16,32 +16,45 @@ def home(request):
         return render(request, 'tracker/home.html')
 
 # Register View
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+from django.views.decorators.csrf import csrf_protect
+
+@csrf_protect
 def register(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
-            form.save()
-            user = form.cleaned_data.get("username")
-            raw_password = form.cleaned_data.get("password1")
-            user = authenticate(username=user, password=raw_password)
-            login(request, user)
-            return redirect('home')  # Redirect to dashboard after registration
+            user = form.save()  # save and get the user
+            login(request, user)  # log them in
+            return redirect('dashboard')  # go to dashboard
     else:
         form = UserCreationForm()
     return render(request, 'tracker/register.html', {'form': form})
-
 # Login View
+from django.contrib import messages  # Optional, for error display
+
 def user_login(request):
     if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+
+        if not username or not password:
+            return render(request, 'tracker/login.html', {'error': 'Username and password are required'})
+
         user = authenticate(request, username=username, password=password)
+
         if user is not None:
             login(request, user)
-            return redirect('home')  
+            return redirect('dashboard')
         else:
-            return HttpResponse("Invalid credentials")
+            return render(request, 'tracker/login.html', {'error': 'Invalid credentials'})
+
+    # This should always return the login form
     return render(request, 'tracker/login.html')
+
 
 # Logout View
 def user_logout(request):
@@ -84,10 +97,27 @@ def visualize_expenses(request):
     categories = Category.objects.all()
     expenses = Expense.objects.filter(user=request.user)
 
+    # If the user has no expenses, display a message and skip the chart generation
+    if not expenses:
+        return render(request, 'tracker/visualize_expenses.html', {
+            'message': 'You have no expenses to visualize. Please add some expenses first.'
+        })
+
     # Calculate total expenses per category
     category_expenses = {category.name: 0 for category in categories}
+    
+    # Sum expenses for each category
     for expense in expenses:
         category_expenses[expense.category.name] += float(expense.amount)
+
+    # Filter out categories with 0 expenses to avoid NaN issues
+    category_expenses = {category: total for category, total in category_expenses.items() if total > 0}
+
+    # If no valid expenses to display, handle the empty case
+    if not category_expenses:
+        return render(request, 'tracker/visualize_expenses.html', {
+            'message': 'You have no expenses to visualize in any category.'
+        })
 
     # Generate file paths for the charts
     static_dir = os.path.join('static', 'tracker')
