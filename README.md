@@ -77,4 +77,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Acknowledgments
 
 - Inspired by various budget management tools and open-source projects.
-- Special thanks to the contributors and the open-source community for their support.
